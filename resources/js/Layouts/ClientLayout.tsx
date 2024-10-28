@@ -8,7 +8,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <>
       <ClientNavigation />
-      <main className="w-full">{children}</main>
+      <main className="mx-auto mt-8 max-w-screen-2xl px-6">{children}</main>
     </>
   );
 }
