@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Enums\AuthProviders;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class AuthAccount extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, HasUuids, Notifiable;
 
     /**
      * The primary key type
@@ -31,12 +31,7 @@ class AuthAccount extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'provider',
-        'provider_account_id',
-        'secret',
-        'user_id'
-    ];
+    protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.

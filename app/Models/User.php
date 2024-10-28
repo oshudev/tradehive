@@ -3,28 +3,28 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, HasUuids, Notifiable;
 
-   /**
-    * The primary key type
-    *
-    * @var string
-   */
-   protected $keyType = 'string';
+    /**
+     * The primary key type
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
-   /**
-    * The "type" of the primary key ID
-    *
-    * @var string
-   */
-   public $incrementing = false;
+    /**
+     * The "type" of the primary key ID
+     *
+     * @var string
+     */
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +32,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
         'first_name',
         'last_name',
         'role',
@@ -46,7 +45,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'id',
         'remember_token',
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -56,6 +58,5 @@ class User extends Authenticatable
      */
     protected $casts = [
         'role' => UserRole::class,
-        'email_verified_at' => 'datetime',
     ];
 }
