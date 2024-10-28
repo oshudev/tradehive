@@ -1,10 +1,12 @@
 import { Config } from 'ziggy-js';
 
+type UserRole = 'freelancer' | 'client';
+
 export interface User {
-  id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
+  role: UserRole;
   email: string;
-  email_verified_at?: string;
 }
 
 export type PageProps<

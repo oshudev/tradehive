@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\UserRole;
+use App\Enums\AuthProviders;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class AuthAccount extends Authenticatable
 {
     use HasFactory, HasUuids, Notifiable;
 
@@ -22,7 +22,7 @@ class User extends Authenticatable
     /**
      * The "type" of the primary key ID
      *
-     * @var string
+     * @var bool
      */
     public $incrementing = false;
 
@@ -31,13 +31,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'role',
-        'email',
-        'avatar',
-    ];
+    protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -45,10 +39,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'id',
         'remember_token',
-        'created_at',
-        'updated_at'
     ];
 
     /**
@@ -57,6 +48,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'role' => UserRole::class,
+        'provider' => AuthProviders::class,
+        'email_verified_at' => 'datetime',
     ];
 }
