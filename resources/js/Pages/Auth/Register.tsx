@@ -80,14 +80,14 @@ export default function Register() {
                   <div
                     className={cn(
                       'relative rounded-xl border-2 border-gray-200 bg-white p-6',
-                      accountType === 'Freelance' && 'border-green-600'
+                      accountType === 'Freelancer' && 'border-green-600'
                     )}
                   >
                     <input
                       className="absolute left-0 top-0 size-full cursor-pointer opacity-0"
                       type="radio"
                       name="accountType"
-                      onClick={() => setAccountType('Freelance')}
+                      onClick={() => setAccountType('Freelancer')}
                     />
                     <div className="py-4">
                       <Hammer className="mb-8 size-8" />

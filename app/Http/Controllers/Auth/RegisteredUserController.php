@@ -34,8 +34,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        \Log::info('Registration request received', $request->all()); // Log the request data
-
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -45,7 +43,6 @@ class RegisteredUserController extends Controller
         ]);
 
         try {
-            // Attempt to create the user
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -66,9 +63,6 @@ class RegisteredUserController extends Controller
 
             return redirect(route('dashboard', absolute: false));
         } catch (\Exception $e) {
-            // Log the error and return a response
-            \Log::error('Registration error: ' . $e->getMessage());
-            \Log::info('Registration request received', $request->all());
             return redirect()->back()->withErrors(['error' => 'Registration failed.']);
         }
     }
