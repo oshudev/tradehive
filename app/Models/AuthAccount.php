@@ -31,7 +31,12 @@ class AuthAccount extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'provider',
+        'provider_account_id',
+        'secret',
+        'user_id'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
