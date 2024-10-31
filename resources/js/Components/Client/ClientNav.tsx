@@ -85,7 +85,7 @@ export default function ClientNav() {
                 className="cursor-pointer rounded-none px-4 py-2 text-base"
                 asChild
               >
-                <Link href="/">
+                <Link href={route('logout')} method="post">
                   <LogOut size={24} />
                   Log out
                 </Link>
