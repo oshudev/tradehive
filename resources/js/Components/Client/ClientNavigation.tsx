@@ -9,31 +9,88 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
-import { Separator } from '@/Components/ui/separator';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/Components/ui/navigation-menu';
 
 import { DropdownMenuArrow } from '@radix-ui/react-dropdown-menu';
 
 import { Bell, LogOut, Settings } from 'lucide-react';
 
-export default function ClientNav() {
+const navigationDropdown = [
+  {
+    name: 'Jobs',
+    links: [
+      {
+        name: 'Post a Job',
+        url: '#',
+      },
+      {
+        name: 'Your Dashboard',
+        url: '#',
+      },
+      {
+        name: 'All Job Posts',
+        url: '#',
+      },
+      {
+        name: 'All Contracts',
+        url: '#',
+      },
+    ],
+  },
+];
+
+export default function ClientNavigation() {
   const user = usePage().props.auth.user;
   const userInitial = user.first_name.charAt(0).toUpperCase();
   const name = user.first_name + ' ' + user.last_name;
 
   return (
-    <header className="px-6 py-4">
-      <nav className="flex justify-between">
+    <header className="mx-auto max-w-screen-2xl px-6">
+      <nav className="flex h-16 items-center justify-between">
         <Link href="/dashboard" className="text-2xl font-bold">
           Tradehive
         </Link>
-        <div className="flex gap-x-2">
+        <div className="flex-1 px-4">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {navigationDropdown.map((item, index) => (
+                <NavigationMenuItem key={index}>
+                  <NavigationMenuTrigger>{item.name}</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul>
+                      {item.links.map((link, index) => (
+                        <li className="px-4 py-2 hover:bg-accent" key={index}>
+                          <NavigationMenuLink className="text-nowrap" asChild>
+                            <Link href={link.url}>{link.name}</Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ))}
+              <NavigationMenuItem>
+                <NavigationMenuLink>
+                  <Link href="#">Messages</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+        <div className="flex gap-x-6">
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Bell className="size-6" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="size-24"></DropdownMenuContent>
           </DropdownMenu>
-          <Separator orientation="vertical" className="mx-4 w-[2px]" />
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Avatar>
@@ -57,7 +114,7 @@ export default function ClientNav() {
                 width={20}
                 className="fill-white stroke-1"
               />
-              <DropdownMenuLabel className="flex w-[245px] items-center gap-x-4 px-4 py-2">
+              <DropdownMenuLabel className="flex w-[245px] items-center gap-x-4 p-4">
                 <Avatar className="size-12">
                   <AvatarImage src={user.avatar} />
                   <AvatarFallback className="text-base font-bold">
@@ -71,13 +128,13 @@ export default function ClientNav() {
                   <div className="font-normal">{user.role}</div>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuSeparator className="mb-0 mt-6" />
+              <DropdownMenuSeparator className="mb-0 mt-4" />
               <DropdownMenuItem
                 className="cursor-pointer rounded-none px-4 py-2 text-base"
                 asChild
               >
                 <Link href="/settings">
-                  <Settings size={24} />
+                  <Settings />
                   Settings
                 </Link>
               </DropdownMenuItem>
@@ -86,7 +143,7 @@ export default function ClientNav() {
                 asChild
               >
                 <Link href={route('logout')} method="post">
-                  <LogOut size={24} />
+                  <LogOut />
                   Log out
                 </Link>
               </DropdownMenuItem>
