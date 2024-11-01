@@ -7,6 +7,7 @@ export interface User {
   last_name: string;
   role: UserRole;
   email: string;
+  avatar: string;
 }
 
 export type PageProps<
