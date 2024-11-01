@@ -18,6 +18,9 @@ Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', function () {
         return Inertia::render('Client/Dashboard');
     })->name('client.dashboard');
+    Route::get('/job-post', function () {
+        return Inertia::render('Client/JobPost');
+    })->name('client.job-post');
 });
 
 
