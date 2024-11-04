@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,6 +22,7 @@ Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/job-post', function () {
         return Inertia::render('Client/JobPost');
     })->name('client.job-post');
+    Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store');
 });
 
 
