@@ -20,7 +20,7 @@ class Project extends Model
         'client_id'
     ];
 
-    public function client  (): BelongsTo {
+    public function client(): BelongsTo {
         return $this->belongsTo(User::class, 'client_id');
     }
 }
