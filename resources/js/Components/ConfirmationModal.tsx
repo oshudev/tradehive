@@ -1,14 +1,19 @@
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter } from '@/Components/ui/dialog';
 import { Button } from '@/Components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+} from '@/Components/ui/dialog';
 
 interface ConfirmationModalProps {
   title: string;
-  description: string;  
-  isOpen: boolean; 
-  setIsOpen: (isOpen: boolean) => void; 
-  onConfirm: () => void; 
-  confirmText?: string; 
-  cancelText?: string; 
+  description: string;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  onConfirm: () => void;
+  confirmText?: string;
+  cancelText?: string;
 }
 
 export default function ConfirmationModal({

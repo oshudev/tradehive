@@ -1,23 +1,30 @@
 import { useState } from 'react';
 
 import ClientLayout from '@/Layouts/ClientLayout';
-import { Head, Link, router } from '@inertiajs/react';
 import { Project, ProjectStatus } from '@/types';
+import { Head, Link, router } from '@inertiajs/react';
 
-import { Button } from '@/Components/ui/button';
-import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/Components/ui/table';
-import { Plus } from 'lucide-react';
 import ConfirmationModal from '@/Components/ConfirmationModal';
+import { Button } from '@/Components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/Components/ui/table';
+import { Plus } from 'lucide-react';
 
 interface DashboardProps {
   projects: Project[];
 }
 
-export default function Dashboard({projects}: DashboardProps) {
+export default function Dashboard({ projects }: DashboardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-    const openModal = (project: Project) => {
+  const openModal = (project: Project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
   };
@@ -29,9 +36,12 @@ export default function Dashboard({projects}: DashboardProps) {
 
   const handleDelete = () => {
     if (selectedProject) {
-      router.delete(route('client.project-delete', { id: selectedProject.id }), {
-        onSuccess: () => closeModal(),
-      });
+      router.delete(
+        route('client.project-delete', { id: selectedProject.id }),
+        {
+          onSuccess: () => closeModal(),
+        }
+      );
     }
   };
 
@@ -47,7 +57,7 @@ export default function Dashboard({projects}: DashboardProps) {
         confirmText="Delete"
         cancelText="Cancel"
       />
-      <div className="flex items-center justify-between mb-8">
+      <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl">Your Jobs</h1>
         <Button size="lg" className="px-5 text-lg" asChild>
           <Link href={route('client.job-post')}>
@@ -57,7 +67,7 @@ export default function Dashboard({projects}: DashboardProps) {
         </Button>
       </div>
 
-     {/* Render table if there are projects */}
+      {/* Render table if there are projects */}
       {projects.length > 0 ? (
         <Table>
           <TableHeader>
@@ -74,18 +84,20 @@ export default function Dashboard({projects}: DashboardProps) {
             {projects.map((project) => (
               <TableRow key={project.id}>
                 <TableCell>{project.title}</TableCell>
-                <TableCell className="truncate max-w-xs">{project.description}</TableCell>
+                <TableCell className="max-w-xs truncate">
+                  {project.description}
+                </TableCell>
                 <TableCell>${project.budget.toLocaleString()}</TableCell>
                 <TableCell>{formatStatus(project.status)}</TableCell>
                 <TableCell>{capitalizeFirstLetter(project.type)}</TableCell>
                 <TableCell>
-                  <div className="flex space-x-2"> 
+                  <div className="flex space-x-2">
                     {/* // TODO: Create edit functionality */}
                     <Button size="sm" variant="outline" asChild>
                       <Link href="">Edit</Link>
                     </Button>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="destructive"
                       onClick={() => openModal(project)}
                     >
@@ -98,9 +110,10 @@ export default function Dashboard({projects}: DashboardProps) {
           </TableBody>
         </Table>
       ) : (
-        <p className="text-center text-gray-500">No projects posted yet. Start by creating your first project!</p>
+        <p className="text-center text-gray-500">
+          No projects posted yet. Start by creating your first project!
+        </p>
       )}
-
     </ClientLayout>
   );
 }

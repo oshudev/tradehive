@@ -1,7 +1,7 @@
 import { Config } from 'ziggy-js';
 
 type UserRole = 'freelancer' | 'client';
-type ProjectStatus = 'open' | 'in_progress' | 'completed' | 'cancelled'; 
+type ProjectStatus = 'open' | 'in_progress' | 'completed' | 'cancelled';
 type BudgetType = 'fixed' | 'hourly';
 
 export interface User {
