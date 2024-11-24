@@ -1,6 +1,8 @@
 import { Config } from 'ziggy-js';
 
 type UserRole = 'freelancer' | 'client';
+type ProjectStatus = 'open' | 'in_progress' | 'completed' | 'cancelled'; 
+type BudgetType = 'fixed' | 'hourly';
 
 export interface User {
   first_name: string;
@@ -8,6 +10,15 @@ export interface User {
   role: UserRole;
   email: string;
   avatar: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  budget: number;
+  status: ProjectStatus;
+  type: BudgetType;
 }
 
 export type PageProps<

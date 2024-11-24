@@ -17,13 +17,15 @@ Route::get('/', function () {
 });
 
 Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
-    Route::get('/dashboard', DashboardController::class)->name('client.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('client.dashboard');
+
 
     Route::get('/job-post', function () {
         return Inertia::render('Client/JobPost');
     })->name('client.job-post');
 
     Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store');
+    Route::delete('/project/{id}', [ProjectController::class, 'destroy'])->name('client.project-delete');
 });
 
 

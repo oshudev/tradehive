@@ -30,4 +30,11 @@ class ProjectController extends Controller
 
         return redirect()->route('client.dashboard')->with('success', 'Job posted successfully!');
     }
+
+    public function destroy($id) {
+        $project = Project::findOrFail($id);
+        $project->delete();
+
+        return redirect()->route('client.dashboard')->with('success', 'Project deleted successfully.');
+    }
 }

@@ -9,15 +9,14 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    /**
-     * Single-action controller to display the dashboard
-     * along with project postings
-     */
-    public function __invoke(Request $request) {
-        $client = Auth::user();
+    public function index()
+    {
+        $projects = Project::all(
+            ['id', 'title', 'description', 'budget', 'status', 'type']
+        );
 
         return Inertia::render('Client/Dashboard', [
-            'projects' => $client->projects,
+            'projects' => $projects,
         ]);
     }
 }
