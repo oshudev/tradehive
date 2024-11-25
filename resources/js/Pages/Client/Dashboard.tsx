@@ -5,6 +5,7 @@ import { Project, ProjectStatus } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 
 import ConfirmationModal from '@/Components/ConfirmationModal';
+import EditJobPost from '@/Components/EditJobPost';
 import { Button } from '@/Components/ui/button';
 import {
   Table,
@@ -23,6 +24,7 @@ interface DashboardProps {
 
 export default function Dashboard({ projects }: DashboardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const openModal = (project: Project) => {
@@ -40,10 +42,20 @@ export default function Dashboard({ projects }: DashboardProps) {
       router.delete(
         route('client.project-delete', { id: selectedProject.id }),
         {
-          onSuccess: () => closeModal(),
+          onSuccess: closeModal,
         }
       );
     }
+  };
+
+  const openSheet = (project: Project) => {
+    setSelectedProject(project);
+    setIsSheetOpen(true);
+  };
+
+  const closeSheet = () => {
+    setSelectedProject(null);
+    setIsSheetOpen(false);
   };
 
   return (
@@ -58,17 +70,22 @@ export default function Dashboard({ projects }: DashboardProps) {
         confirmText="Delete"
         cancelText="Cancel"
       />
+      <EditJobPost
+        isSheetOpen={isSheetOpen}
+        setIsSheetOpen={setIsSheetOpen}
+        selectedProject={selectedProject}
+        closeSheet={closeSheet}
+      />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-4xl">Your Jobs</h1>
         <Button size="lg" className="px-5 text-lg" asChild>
-          <Link href={route('client.job-post')}>
+          <Link href={route('client.job-post.index')}>
             <Plus />
             Post a Job
           </Link>
         </Button>
       </div>
 
-      {/* Render table if there are projects */}
       {projects.length > 0 ? (
         <Table>
           <TableHeader>
@@ -93,10 +110,12 @@ export default function Dashboard({ projects }: DashboardProps) {
                 <TableCell>{capitalizeFirstLetter(project.type)}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
-                    <Button size="sm" variant="outline" asChild>
-                      <Link href={route('client.job-post.edit', project.id)}>
-                        Edit
-                      </Link>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => openSheet(project)}
+                    >
+                      Edit
                     </Button>
                     <Button
                       size="sm"

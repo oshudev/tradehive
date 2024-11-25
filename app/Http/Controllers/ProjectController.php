@@ -10,10 +10,8 @@ use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
-    public function edit(Project $project) {
-        return Inertia::render('Client/EditJobPost', [
-            'project' => $project,
-        ]);
+    public function index() {
+        return Inertia::render('Client/JobPost');
     }
 
     public function store(Request $request) {

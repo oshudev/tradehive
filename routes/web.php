@@ -19,16 +19,9 @@ Route::get('/', function () {
 Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('client.dashboard');
 
-
-    Route::get('/job-post', function () {
-        return Inertia::render('Client/JobPost');
-    })->name('client.job-post');
-
-    Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store');
-    
-    Route::get('/job-post/edit/{project}', [ProjectController::class, 'edit'])->name('client.job-post.edit');
-    Route::patch('/job-post/edit', [ProjectController::class, 'update'])->name('client.job-post.update');
-    
+    Route::get('/job-post', [ProjectController::class, 'index'])->name('client.job-post.index');
+    Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store'); 
+    Route::patch('/job-post/edit', [ProjectController::class, 'update'])->name('client.job-post.update'); 
     Route::delete('/job-post/{project}', [ProjectController::class, 'destroy'])->name('client.project-delete');
 });
 
