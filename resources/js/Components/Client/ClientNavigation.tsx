@@ -54,7 +54,7 @@ export default function ClientNavigation() {
   return (
     <header className="mx-auto max-w-screen-2xl px-6">
       <nav className="flex h-16 items-center justify-between">
-        <Link href="/dashboard" className="text-2xl font-bold">
+        <Link href="/client/dashboard" className="text-2xl font-bold">
           Tradehive
         </Link>
         <div className="flex-1 px-4">
