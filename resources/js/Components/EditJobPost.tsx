@@ -39,7 +39,8 @@ export default function EditJobPost({
     } else {
       reset();
     }
-  }, [selectedProject, setData, reset]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProject]);
 
   const handleEditSubmit: FormEventHandler = (e) => {
     e.preventDefault();
