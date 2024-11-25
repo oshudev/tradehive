@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/Components/ui/table';
+
 import { Plus } from 'lucide-react';
 
 interface DashboardProps {
@@ -92,9 +93,10 @@ export default function Dashboard({ projects }: DashboardProps) {
                 <TableCell>{capitalizeFirstLetter(project.type)}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2">
-                    {/* // TODO: Create edit functionality */}
                     <Button size="sm" variant="outline" asChild>
-                      <Link href="">Edit</Link>
+                      <Link href={route('client.job-post.edit', project.id)}>
+                        Edit
+                      </Link>
                     </Button>
                     <Button
                       size="sm"

@@ -25,7 +25,11 @@ Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
     })->name('client.job-post');
 
     Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store');
-    Route::delete('/project/{id}', [ProjectController::class, 'destroy'])->name('client.project-delete');
+    
+    Route::get('/job-post/edit/{project}', [ProjectController::class, 'edit'])->name('client.job-post.edit');
+    Route::patch('/job-post/edit', [ProjectController::class, 'update'])->name('client.job-post.update');
+    
+    Route::delete('/job-post/{project}', [ProjectController::class, 'destroy'])->name('client.project-delete');
 });
 
 
