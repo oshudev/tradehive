@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import ClientLayout from '@/Layouts/ClientLayout';
 import { Project, ProjectStatus } from '@/types';
@@ -22,7 +22,7 @@ interface DashboardProps {
   projects: Project[];
 }
 
-export default function Dashboard({ projects }: DashboardProps) {
+const Dashboard = ({ projects }: DashboardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -59,7 +59,7 @@ export default function Dashboard({ projects }: DashboardProps) {
   };
 
   return (
-    <ClientLayout>
+    <>
       <Head title="Dashboard" />
       <ConfirmationModal
         title="Confirm Delete"
@@ -135,7 +135,7 @@ export default function Dashboard({ projects }: DashboardProps) {
           No projects posted yet. Start by creating your first project!
         </p>
       )}
-    </ClientLayout>
+    </>
   );
 }
 
@@ -146,3 +146,7 @@ function formatStatus(status: ProjectStatus): string {
 function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+Dashboard.layout = (page: React.ReactNode) => <ClientLayout children={page} />;
+
+export default Dashboard;
