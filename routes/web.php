@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\EnsureUserIsRole;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -27,9 +28,7 @@ Route::prefix('client')->middleware(['auth', 'verified', EnsureUserIsRole::class
 });
 
 Route::prefix('freelancer')->middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->group(function() {
-    Route::get('/dashboard', function() {
-        return "Test";
-    })->name('freelancer.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'freelancer_index'])->name('freelancer.dashboard');
 });
 
 Route::middleware('auth')->group(function () {
