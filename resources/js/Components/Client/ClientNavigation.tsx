@@ -27,20 +27,12 @@ const navigationDropdown = [
     name: 'Jobs',
     links: [
       {
-        name: 'Post a Job',
-        url: '#',
-      },
-      {
-        name: 'Your Dashboard',
-        url: '#',
-      },
-      {
-        name: 'All Job Posts',
-        url: '#',
+        name: 'Candidates',
+        url: 'client.proposals.index',
       },
       {
         name: 'All Contracts',
-        url: '#',
+        url: 'profile.edit',
       },
     ],
   },
@@ -68,7 +60,7 @@ export default function ClientNavigation() {
                       {item.links.map((link, index) => (
                         <li className="px-4 py-2 hover:bg-accent" key={index}>
                           <NavigationMenuLink className="text-nowrap" asChild>
-                            <Link href={link.url}>{link.name}</Link>
+                            <Link href={route(link.url)}>{link.name}</Link>
                           </NavigationMenuLink>
                         </li>
                       ))}

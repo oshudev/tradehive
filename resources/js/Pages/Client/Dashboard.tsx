@@ -137,7 +137,7 @@ const Dashboard = ({ projects }: DashboardProps) => {
       )}
     </>
   );
-}
+};
 
 function formatStatus(status: ProjectStatus): string {
   return capitalizeFirstLetter(status.replace('_', ' '));

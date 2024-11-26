@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProposalController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,9 @@ Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
     Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store'); 
     Route::patch('/job-post/edit', [ProjectController::class, 'update'])->name('client.job-post.update'); 
     Route::delete('/job-post/{project}', [ProjectController::class, 'destroy'])->name('client.project-delete');
+
+    Route::get('/proposals', [ProposalController::class, 'index'])->name('client.proposals.index');
+    Route::patch('/proposals/{proposal}/{action}', [ProposalController::class, 'updateStatus'])->name('client.proposals.updateStatus');
 });
 
 

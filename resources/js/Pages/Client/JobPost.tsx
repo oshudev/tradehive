@@ -139,7 +139,7 @@ const JobPost = () => {
       </form>
     </>
   );
-}
+};
 
 JobPost.layout = (page: React.ReactNode) => <ClientLayout children={page} />;
 
