@@ -4,8 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\EnsureUserIsRole;
+use App\Models\Project;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -29,6 +31,9 @@ Route::prefix('client')->middleware(['auth', 'verified', EnsureUserIsRole::class
 
 Route::prefix('freelancer')->middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'freelancer_index'])->name('freelancer.dashboard');
+    Route::get('/dashboard/search', function(Request $request) {
+        return Project::search($request->search)->get();
+    });
 });
 
 Route::middleware('auth')->group(function () {
