@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Proposal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class ProposalController extends Controller
 {
     public function index() 
     {
-        $proposals = Proposal::with('freelancer:id,first_name,last_name,email')->get();
+        $proposals = Proposal::with(['project:id,client_id', 'freelancer:id,first_name,last_name,email'])
+            ->get()
+            ->where('project.client_id', Auth::id());
+
 
         return Inertia::render('Client/Proposals', [
             'proposals' => $proposals,

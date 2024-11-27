@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
         $projects = Project::all(
             ['id', 'title', 'description', 'budget', 'status', 'type']
-        );
+        )->where('client_id', Auth::id());
 
         return Inertia::render('Client/Dashboard', [
             'projects' => $projects,

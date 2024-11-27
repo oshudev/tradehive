@@ -64,4 +64,8 @@ class User extends Authenticatable
     public function projects(): HasMany {
         return $this->hasMany(Project::class, 'client_id');
     }
+
+    public function proposals(): HasMany {
+        return $this->hasMany(Proposal::class, 'freelancer_id');
+    }
 }
