@@ -27,20 +27,12 @@ const navigationDropdown = [
     name: 'Jobs',
     links: [
       {
-        name: 'Post a Job',
-        url: '#',
-      },
-      {
-        name: 'Your Dashboard',
-        url: '#',
-      },
-      {
-        name: 'All Job Posts',
-        url: '#',
+        name: 'Proposals',
+        url: 'client.proposals.index',
       },
       {
         name: 'All Contracts',
-        url: '#',
+        url: 'client.project-assignment.index',
       },
     ],
   },
@@ -54,7 +46,7 @@ export default function ClientNavigation() {
   return (
     <header className="mx-auto max-w-screen-2xl px-6">
       <nav className="flex h-16 items-center justify-between">
-        <Link href="/dashboard" className="text-2xl font-bold">
+        <Link href="/client/dashboard" className="text-2xl font-bold">
           Tradehive
         </Link>
         <div className="flex-1 px-4">
@@ -68,7 +60,7 @@ export default function ClientNavigation() {
                       {item.links.map((link, index) => (
                         <li className="px-4 py-2 hover:bg-accent" key={index}>
                           <NavigationMenuLink className="text-nowrap" asChild>
-                            <Link href={link.url}>{link.name}</Link>
+                            <Link href={route(link.url)}>{link.name}</Link>
                           </NavigationMenuLink>
                         </li>
                       ))}

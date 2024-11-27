@@ -6,30 +6,34 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Project extends Model
+class Proposal extends Model
 {
     use HasFactory, HasUuids;
 
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     protected $fillable = [
-        'title',
-        'description',
-        'budget',
+        'id',
+        'project_id',
+        'freelancer_id',
+        'bid_amount',
         'status',
-        'type',
-        'client_id'
     ];
 
-    public function client(): BelongsTo {
-        return $this->belongsTo(User::class, 'client_id');
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
     }
 
-    public function proposals(): HasMany {
-        return $this->hasMany(Proposal::class);
+    public function freelancer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'freelancer_id')->where('role', 'freelancer');
     }
-
+    
     public function assignment(): HasOne
     {
         return $this->hasOne(ProjectAssignment::class); 

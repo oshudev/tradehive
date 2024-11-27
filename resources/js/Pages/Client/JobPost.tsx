@@ -4,10 +4,10 @@ import { Label } from '@/Components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/Components/ui/radio-group';
 import { Textarea } from '@/Components/ui/textarea';
 import ClientLayout from '@/Layouts/ClientLayout';
-import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import React, { FormEventHandler } from 'react';
 
-export default function JobPost() {
+const JobPost = () => {
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     description: '',
@@ -36,7 +36,7 @@ export default function JobPost() {
   };
 
   return (
-    <ClientLayout>
+    <>
       <Head title="Post a Job" />
       <h1 className="text-4xl">Post a job</h1>
       <form onSubmit={submit} className="mx-auto max-w-[560px] px-7 py-12">
@@ -132,11 +132,15 @@ export default function JobPost() {
           >
             {processing ? 'Submitting...' : 'Submit'}
           </Button>
-          <Button variant="ghost" size="lg" className="text-md">
-            Cancel
+          <Button variant="ghost" size="lg" className="text-md" asChild>
+            <Link href="/client/dashboard">Cancel</Link>
           </Button>
         </div>
       </form>
-    </ClientLayout>
+    </>
   );
-}
+};
+
+JobPost.layout = (page: React.ReactNode) => <ClientLayout children={page} />;
+
+export default JobPost;
