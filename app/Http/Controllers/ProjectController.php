@@ -59,7 +59,7 @@ class ProjectController extends Controller
             $proposal->update(['status' => 'rejected']);         
         }
     
-        return redirect()->route('client.project_assignment.index')->with('success', 'Project cancelled successfully.');
+        return redirect()->route('client.project-assignment.index')->with('success', 'Project cancelled successfully.');
     }
 
     public function destroy(Project $project) {

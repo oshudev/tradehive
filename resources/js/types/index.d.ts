@@ -32,6 +32,7 @@ export interface Proposal {
 
 export interface Contract {
   id: string;
+  project_id: string;
   freelancer: string;
   bid_amount: string;
   title: string;

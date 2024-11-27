@@ -26,7 +26,7 @@ class Project extends Model
         return $this->belongsTo(User::class, 'client_id');
     }
 
-    public function proposal(): HasMany {
+    public function proposals(): HasMany {
         return $this->hasMany(Proposal::class);
     }
 

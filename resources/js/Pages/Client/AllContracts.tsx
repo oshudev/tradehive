@@ -89,7 +89,7 @@ const AllContracts = ({ contracts }: AllContractsProps) => {
                 <TableCell>
                   <Button
                     variant="destructive"
-                    onClick={() => openModal(contract.id)}
+                    onClick={() => openModal(contract.project_id)}
                     disabled={contract.status === 'cancelled'}
                   >
                     Cancel

@@ -18,6 +18,7 @@ class ProjectAssignmentController extends Controller
         ->map(function ($proposal) {
             return [
                 'id' => $proposal->id,
+                'project_id' => $proposal->project->id,
                 'freelancer' => $proposal->freelancer->first_name . ' ' . $proposal->freelancer->last_name,
                 'bid_amount' => $proposal->bid_amount,
                 'title' => $proposal->project->title,
