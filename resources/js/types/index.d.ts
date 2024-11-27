@@ -30,6 +30,15 @@ export interface Proposal {
   created_at: string;
 }
 
+export interface Contract {
+  id: string;
+  project_id: string;
+  freelancer: string;
+  bid_amount: string;
+  title: string;
+  status: ProjectStatus;
+}
+
 export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {

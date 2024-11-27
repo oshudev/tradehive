@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProjectAssignment;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,12 @@ class ProposalController extends Controller
                 ->where('id', '!=', $proposal->id)
                 ->update(['status' => 'rejected']);
         }
+
+        ProjectAssignment::create([
+            'project_id' => $proposal->project_id,
+            'proposal_id' => $proposal->id,
+            'assigned_at' => now(),
+        ]);
 
         $proposal->update(['status' => $action === 'accept' ? 'accepted' : 'rejected']);
 
