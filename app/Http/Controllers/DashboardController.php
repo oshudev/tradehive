@@ -13,6 +13,8 @@ class DashboardController extends Controller
             ['id', 'title', 'description', 'budget', 'status', 'type']
         );
 
-        return $projects;
+        return Inertia::render('Freelancer/Dashboard', [
+            $projects
+        ]);
     }
 }
