@@ -20,7 +20,7 @@ class ProposalFactory extends Factory
     {
         return [
             'id' => $this->faker->uuid,
-            'project_id' => '9d95df18-c04c-479f-8418-ede67b90a150',
+            'project_id' => Project::where('status', 'open')->inRandomOrder()->value('id'), // Select a random open project
             'freelancer_id' => User::factory()->state(['role' => 'freelancer']),
             'bid_amount' => $this->faker->randomFloat(2, 100, 1000),
             'status' =>  'pending',      

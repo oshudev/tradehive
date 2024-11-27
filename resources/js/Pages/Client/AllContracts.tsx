@@ -16,6 +16,7 @@ import { Contract } from '@/types';
 
 import ConfirmationModal from '@/Components/ConfirmationModal';
 import { Head, router } from '@inertiajs/react';
+import { toast } from '@/hooks/use-toast';
 
 interface AllContractsProps {
   contracts: Contract[];
@@ -45,16 +46,21 @@ const AllContracts = ({ contracts }: AllContractsProps) => {
       {},
       {
         onSuccess: () => {
-          alert('Contract cancelled successfully.');
           closeModal();
         },
         onError: () => {
-          alert('Failed to cancel the contract. Please try again.');
           closeModal();
         },
       }
     );
   };
+
+  function formatStatus(status: string): string {
+    return status
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
 
   return (
     <>
@@ -83,9 +89,9 @@ const AllContracts = ({ contracts }: AllContractsProps) => {
             {contracts.map((contract) => (
               <TableRow key={contract.id}>
                 <TableCell>{contract.freelancer}</TableCell>
-                <TableCell>{contract.bid_amount}</TableCell>
+                <TableCell>{'$' + contract.bid_amount}</TableCell>
                 <TableCell>{contract.title}</TableCell>
-                <TableCell>{contract.status}</TableCell>
+                <TableCell>{formatStatus(contract.status)}</TableCell>
                 <TableCell>
                   <Button
                     variant="destructive"
