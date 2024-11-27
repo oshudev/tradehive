@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectAssignmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProposalController;
 use Illuminate\Foundation\Application;
@@ -27,8 +28,10 @@ Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
 
     Route::get('/proposals', [ProposalController::class, 'index'])->name('client.proposals.index');
     Route::patch('/proposals/{proposal}/{action}', [ProposalController::class, 'updateStatus'])->name('client.proposals.updateStatus');
+    
+    Route::get('/all-contracts', [ProjectAssignmentController::class, 'index'])->name('client.project-assignment.index');
+    Route::patch('/projects/{project}/cancel', [ProjectController::class, 'cancel'])->name('client.projects.cancel');
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

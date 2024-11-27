@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Proposal extends Model
 {
@@ -31,5 +32,10 @@ class Proposal extends Model
     public function freelancer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'freelancer_id');
+    }
+    
+    public function assignment(): HasOne
+    {
+        return $this->hasOne(ProjectAssignment::class); 
     }
 }

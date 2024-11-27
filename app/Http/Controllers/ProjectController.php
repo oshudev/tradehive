@@ -47,6 +47,21 @@ class ProjectController extends Controller
         return redirect()->route('client.dashboard')->with('success', 'Job edited successfully');
     }
 
+    public function cancel(Project $project)
+    {
+        if ($project->status === 'cancelled') {
+            return response()->json(['message' => 'Project is already cancelled.'], 400); // Return with a bad request status
+        }
+    
+        $project->update(['status' => 'cancelled']);
+
+        foreach ($project->proposals as $proposal) {
+            $proposal->update(['status' => 'rejected']);         
+        }
+    
+        return redirect()->route('client.project_assignment.index')->with('success', 'Project cancelled successfully.');
+    }
+
     public function destroy(Project $project) {
         $project->delete();
 

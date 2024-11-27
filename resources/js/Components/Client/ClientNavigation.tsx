@@ -32,7 +32,7 @@ const navigationDropdown = [
       },
       {
         name: 'All Contracts',
-        url: 'profile.edit',
+        url: 'client.project-assignment.index',
       },
     ],
   },
