@@ -27,7 +27,7 @@ const navigationDropdown = [
     name: 'Jobs',
     links: [
       {
-        name: 'Candidates',
+        name: 'Proposals',
         url: 'client.proposals.index',
       },
       {
