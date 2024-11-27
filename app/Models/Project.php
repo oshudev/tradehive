@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 
 class Project extends Model
@@ -26,5 +29,18 @@ class Project extends Model
             'title' => $this->title,
             'description' => $this->description,
         ];
+    }
+
+    public function client(): BelongsTo {
+        return $this->belongsTo(User::class, 'client_id');
+    }
+
+    public function proposals(): HasMany {
+        return $this->hasMany(Proposal::class);
+    }
+
+    public function assignment(): HasOne
+    {
+        return $this->hasOne(ProjectAssignment::class); 
     }
 }

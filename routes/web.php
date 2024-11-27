@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectAssignmentController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\EnsureUserIsRole;
 use App\Models\Project;
+use App\Http\Controllers\ProposalController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -20,15 +23,19 @@ Route::get('/', function () {
 });
 
 Route::prefix('client')->middleware(['auth', 'verified', EnsureUserIsRole::class.':client'])->group(function() {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Client/Dashboard');
-    })->name('client.dashboard');
-    Route::get('/job-post', function () {
-        return Inertia::render('Client/JobPost');
-    })->name('client.job-post');
-    Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store');
-});
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('client.dashboard');
 
+    Route::get('/job-post', [ProjectController::class, 'index'])->name('client.job-post.index');
+    Route::post('/job-post/store', [ProjectController::class, 'store'])->name('client.job-post.store'); 
+    Route::patch('/job-post/edit', [ProjectController::class, 'update'])->name('client.job-post.update'); 
+    Route::delete('/job-post/{project}', [ProjectController::class, 'destroy'])->name('client.project-delete');
+
+    Route::get('/proposals', [ProposalController::class, 'index'])->name('client.proposals.index');
+    Route::patch('/proposals/{proposal}/{action}', [ProposalController::class, 'updateStatus'])->name('client.proposals.updateStatus');
+    
+    Route::get('/all-contracts', [ProjectAssignmentController::class, 'index'])->name('client.project-assignment.index');
+    Route::patch('/projects/{project}/cancel', [ProjectController::class, 'cancel'])->name('client.projects.cancel');
+});
 Route::prefix('freelancer')->middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'freelancer_index'])->name('freelancer.dashboard');
     Route::get('/dashboard/search', function(Request $request) {
