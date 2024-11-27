@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FreelanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectAssignmentController;
 use App\Http\Controllers\ProjectController;
@@ -35,9 +36,10 @@ Route::prefix('client')->middleware(['auth', 'verified', EnsureUserIsRole::class
     Route::get('/all-contracts', [ProjectAssignmentController::class, 'index'])->name('client.project-assignment.index');
     Route::patch('/projects/{project}/cancel', [ProjectController::class, 'cancel'])->name('client.projects.cancel');
 });
-Route::prefix('freelancer')->middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->group(function() {
-    Route::get('/dashboard', [DashboardController::class, 'freelancer_index'])->name('freelancer.dashboard');
-    Route::get('/dashboard/search', function(Request $request) {
+
+Route::middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->group(function() {
+    Route::get('/home', [FreelanceController::class, 'index'])->name('freelancer.dashboard');
+    Route::get('/home/search', function(Request $request) {
         return Project::search($request->search)->get();
     });
 });
