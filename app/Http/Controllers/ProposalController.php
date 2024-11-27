@@ -19,16 +19,22 @@ class ProposalController extends Controller
 
     public function updateStatus(Proposal $proposal, string $action)
     {
-        $proposal = Proposal::findOrFail($proposal->id);
-
         if (!in_array($action, ['accept', 'reject'])) {
             return response()->json([
                 'message' => 'Invalid action.',
             ], 400);
         }
 
+        if ($action === 'accept') {
+            $proposal->project->update(['status' => 'in_progress']);
+
+            Proposal::where('project_id', $proposal->project_id)
+                ->where('id', '!=', $proposal->id)
+                ->update(['status' => 'rejected']);
+        }
+
         $proposal->update(['status' => $action === 'accept' ? 'accepted' : 'rejected']);
 
-        return redirect()->back()->with('message', 'Success');
+        return redirect()->back()->with('message', 'Proposal has been ' . $action . 'ed successfully.');
     }
 }
