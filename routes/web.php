@@ -4,7 +4,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectAssignmentController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\EnsureUserIsRole;
 use App\Models\Project;
 use App\Http\Controllers\ProposalController;
