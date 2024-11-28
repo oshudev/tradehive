@@ -36,7 +36,7 @@ class Project extends Model
     }
 
     public function proposals(): HasMany {
-        return $this->hasMany(Proposal::class);
+        return $this->hasMany(Proposal::class, 'project_id');
     }
 
     public function assignment(): HasOne

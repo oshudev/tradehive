@@ -12,9 +12,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $projects = Project::all(
-            ['id', 'title', 'description', 'budget', 'status', 'type']
-        )->where('client_id', Auth::id());
+        $projects = Project::where('client_id', Auth::id())->get(['id', 'title', 'description', 'budget', 'status', 'type']);
 
         return Inertia::render('Client/Dashboard', [
             'projects' => $projects,
