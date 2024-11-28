@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\ProjectAssignment;
 use App\Models\Proposal;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -12,11 +13,14 @@ class ProposalController extends Controller
 {
     public function index() 
     {
-        $proposals = Proposal::with(['project:id,client_id', 'freelancer:id,first_name,last_name,email'])
+        $proposals = Project::with('proposals.freelancer')
+            ->where('client_id', Auth::id())
             ->get()
-            ->where('project.client_id', Auth::id());
-
-
+            ->reduce(function ($acc, $project) {
+                return $acc->concat($project->proposals);
+            }, collect());
+        
+        
         return Inertia::render('Client/Proposals', [
             'proposals' => $proposals,
         ]);

@@ -56,51 +56,52 @@ const Proposals = ({ proposals }: ProposalProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {proposals.map((proposal) => (
-              <TableRow key={proposal.id}>
-                <TableCell>
-                  {proposal.freelancer.first_name}{' '}
-                  {proposal.freelancer.last_name}
-                </TableCell>
-                <TableCell>{proposal.freelancer.email}</TableCell>
-                <TableCell>${proposal.bid_amount}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      proposal.status === 'pending'
-                        ? 'secondary'
-                        : proposal.status === 'accepted'
-                          ? 'default'
-                          : 'destructive'
-                    }
-                  >
-                    {proposal.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  {proposal.status === 'pending' && (
-                    <div className="flex gap-2">
-                      <Button
-                        size="sm"
-                        variant="default"
-                        onClick={() => handleAction(proposal.id, 'accept')}
-                        disabled={processing}
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => handleAction(proposal.id, 'reject')}
-                        disabled={processing}
-                      >
-                        Reject
-                      </Button>
-                    </div>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
+            {proposals &&
+              proposals.map((proposal) => (
+                <TableRow key={proposal.id}>
+                  <TableCell>
+                    {proposal.freelancer.first_name}{' '}
+                    {proposal.freelancer.last_name}
+                  </TableCell>
+                  <TableCell>{proposal.freelancer.email}</TableCell>
+                  <TableCell>${proposal.bid_amount}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        proposal.status === 'pending'
+                          ? 'secondary'
+                          : proposal.status === 'accepted'
+                            ? 'default'
+                            : 'destructive'
+                      }
+                    >
+                      {proposal.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {proposal.status === 'pending' && (
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant="default"
+                          onClick={() => handleAction(proposal.id, 'accept')}
+                          disabled={processing}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => handleAction(proposal.id, 'reject')}
+                          disabled={processing}
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>
