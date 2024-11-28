@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\ProjectAssignment;
 use App\Models\Proposal;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -51,5 +52,23 @@ class ProposalController extends Controller
         $proposal->update(['status' => $action === 'accept' ? 'accepted' : 'rejected']);
 
         return redirect()->back()->with('message', 'Proposal has been ' . $action . 'ed successfully.');
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            'project_id' => 'required|uuid|exists:projects,id',
+            'bid_amount' => 'required|numeric|min:0',
+        ]);
+
+        $freelancerID = Auth::id();
+
+        Proposal::create([
+            'project_id' => $request->project_id,
+            'freelancer_id' => $freelancerID,
+            'bid_amount' => $request->bid_amount,
+        ]);
+
+        // TODO: Change redirect to somewhere?
+        return redirect(route('freelancer.dashboard'));
     }
 }
