@@ -59,9 +59,9 @@ class RegisteredUserController extends Controller
 
             event(new Registered($authAccount));
 
-            Auth::login($authAccount);
+            Auth::login($user);
 
-            return redirect(route('dashboard', absolute: false));
+            return redirect(route($user->role->value . '.dashboard'));
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Registration failed.']);
         }

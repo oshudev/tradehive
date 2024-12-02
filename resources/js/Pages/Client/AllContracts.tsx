@@ -16,7 +16,6 @@ import { Contract } from '@/types';
 
 import ConfirmationModal from '@/Components/ConfirmationModal';
 import { Head, router } from '@inertiajs/react';
-import { toast } from '@/hooks/use-toast';
 
 interface AllContractsProps {
   contracts: Contract[];

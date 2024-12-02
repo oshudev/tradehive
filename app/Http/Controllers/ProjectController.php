@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -63,6 +64,14 @@ class ProjectController extends Controller
     }
 
     public function destroy(Project $project) {
+        if ($project->assignment) {
+            $project->assignment->delete();
+        }
+
+        $project->proposals->each(function (Proposal $proposal) {
+            $proposal->delete();
+        });
+
         $project->delete();
 
         return redirect()->route('client.dashboard')->with('success', 'Project deleted successfully.');

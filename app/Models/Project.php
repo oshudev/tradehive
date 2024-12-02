@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Laravel\Scout\Searchable;
 
 class Project extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Searchable;
 
     protected $fillable = [
         'title',
@@ -22,12 +23,20 @@ class Project extends Model
         'client_id'
     ];
 
+    public function toSearchableArray(): array {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
+    }
+
     public function client(): BelongsTo {
         return $this->belongsTo(User::class, 'client_id');
     }
 
     public function proposals(): HasMany {
-        return $this->hasMany(Proposal::class);
+        return $this->hasMany(Proposal::class, 'project_id');
     }
 
     public function assignment(): HasOne

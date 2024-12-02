@@ -73,7 +73,7 @@ export default function Login() {
         </CardContent>
         <CardFooter className="pt-7">
           <p className="w-full text-center">
-            Already have an account?&nbsp;
+            New to Tradehive?&nbsp;
             <Link href="/register" className="text-green-900 underline">
               Register
             </Link>

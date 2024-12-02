@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FreelanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectAssignmentController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Middleware\EnsureUserIsRole;
+use App\Models\Project;
 use App\Http\Controllers\ProposalController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -18,7 +22,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
+Route::prefix('client')->middleware(['auth', 'verified', EnsureUserIsRole::class.':client'])->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('client.dashboard');
 
     Route::get('/job-post', [ProjectController::class, 'index'])->name('client.job-post.index');
@@ -31,6 +35,16 @@ Route::prefix('client')->middleware(['auth', 'verified'])->group(function() {
     
     Route::get('/all-contracts', [ProjectAssignmentController::class, 'index'])->name('client.project-assignment.index');
     Route::patch('/projects/{project}/cancel', [ProjectController::class, 'cancel'])->name('client.projects.cancel');
+});
+
+Route::middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->group(function() {
+    Route::get('/home', [FreelanceController::class, 'index'])->name('freelancer.dashboard');
+    Route::get('/home/search', function(Request $request) {
+        return Project::search($request->search)->get();
+    });
+
+    Route::get('/proposal/{id}/submission', [ProposalController::class, 'create'])->name('freelancer.proposal.submission');
+    Route::post('/proposal/{id}/store', [ProposalController::class, 'store'])->name('freelancer.proposal.store');
 });
 
 Route::middleware('auth')->group(function () {
