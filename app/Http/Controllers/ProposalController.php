@@ -67,7 +67,7 @@ class ProposalController extends Controller
     public function store(Request $request) {
         $request->validate([
             'project_id' => 'required|uuid|exists:projects,id',
-            'bid_amount' => 'required|numeric|min:0',
+            'bid_amount' => 'required|numeric|min:0|max_digits:6',
         ]);
 
         $freelancerID = Auth::id();
