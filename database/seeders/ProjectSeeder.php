@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         Project::factory()
-            ->count(50)
+            ->count(10)
             ->state(new Sequence(
                 ['type' => 'fixed'],
                 ['type' => 'hourly']

@@ -43,7 +43,8 @@ Route::middleware(['auth', 'verified', EnsureUserIsRole::class.':freelancer'])->
         return Project::search($request->search)->get();
     });
 
-    Route::post('/proposal/store', [ProposalController::class, 'store'])->name('freelancer.proposal.store');
+    Route::get('/proposal/{id}/submission', [ProposalController::class, 'create'])->name('freelancer.proposal.submission');
+    Route::post('/proposal/{id}/store', [ProposalController::class, 'store'])->name('freelancer.proposal.store');
 });
 
 Route::middleware('auth')->group(function () {

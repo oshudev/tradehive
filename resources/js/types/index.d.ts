@@ -39,6 +39,16 @@ export interface Contract {
   status: ProjectStatus;
 }
 
+interface Proposal {
+  id: string;
+  project_id: string;
+  freelancer_id: string;
+  bid_amount: number | null;
+  status: 'pending' | 'accepted' | 'rejected';
+  created_at: string;
+  updated_at: string;
+}
+
 export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {

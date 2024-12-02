@@ -9,6 +9,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProposalController extends Controller
 {
@@ -24,6 +25,15 @@ class ProposalController extends Controller
         
         return Inertia::render('Client/Proposals', [
             'proposals' => $proposals,
+        ]);
+    }
+
+    public function create($id): Response 
+    {
+        $project = Project::findOrFail($id);
+
+        return Inertia::render('Client/ProposalSubmission', [
+            'project' => $project,
         ]);
     }
 
@@ -69,6 +79,6 @@ class ProposalController extends Controller
         ]);
 
         // TODO: Change redirect to somewhere?
-        return redirect(route('freelancer.dashboard'));
+        return redirect()->route('freelancer.dashboard');
     }
 }
